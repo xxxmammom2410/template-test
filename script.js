@@ -16,8 +16,10 @@ function loading(){
 
 // Hide Loading
 function complete(){
-  loader.hidden = true;
-  quoteContainer.hidden = false;
+    if(!loader.hidden){
+      loader.hidden = true;
+      quoteContainer.hidden = false;
+    }
 }
 
 // Show New Quote
@@ -27,12 +29,12 @@ function newQuote() {
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
   //ローカルでのAPIバックアップを利用する場合
   // const quote = localQuotes[Math.floor(Math.random() * localQuotes.length)]
- authorText.textContent = quote.author ;
+ authorText.innerText = quote.author ;
 //  Check if Author field is blank and replace it wht 'Unknown'
-if (!quote.author){
-  authorText.textContent = 'Unknown';
+if (!quote.author){//quote.authorに値が設定されている場合はtrueが反転されてfalseになる
+  authorText.innerText = 'Unknown';
 }else{
-  authorText.textContent = quote.author;
+  authorText.innerText = quote.author;
 }
   // Check Quote length to determine styling
   if(quote.text.length > 120){
@@ -41,7 +43,7 @@ if (!quote.author){
     quoteText.classList.remove('long-quote');
   }
   // Set Quote, Hide Loader
- quoteText.textContent = quote.text;
+ quoteText.innerText = quote.text;
  complete();
 }
 
@@ -64,7 +66,7 @@ async function getQuotes(){
 
 //  Tweet Quote
 function tweetQuote(){
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${authorText.textContent}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.innerText} - ${authorText.textContent}`;
   // window.open(twitterUrl, '_blank')
   window.open(twitterUrl,
   // "https://programmercollege.jp/",
